@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: business-coffeshop
+  messages:
+    basename: messages
+    encoding: UTF-8
+
+  datasource:
+    url: jdbc:mariadb://103.178.231.211:3106/ewallet_adapter
+    username: root
+    password: spAsBml12drw
+    driver-class-name: org.mariadb.jdbc.Driver
+  #    jpa:
+  #      properties:
+  #        hibernate:
+  #          dialect: org.hibernate.dialect.MariaDB103Dialect
+  #          show_sql: false
+  #          format_sql: false
+  #          generate_statistics: false
+  #          jdbc.batch_size: 500
+  #          order_inserts: true
+  #          order_updates: true
+  liquibase:
+    enabled: false
+  jackson:
+    time-zone: GMT+7
+  zipkin:
+    enabled: false
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      static-locations: classpath:/static/
+application-context-name: /business-coffeeshop
+
+server:
+  port: 9008
+  shutdown: graceful
+  tomcat:
+    threads:
+      max: 500
+      min-spare: 20
+    max-connections: 500
+    accept-count: 200
+    max-http-form-post-size: 10MB
+
+logging:
+  level:
+    feign.client: DEBUG
+    ROOT: INFO
+    com.viettel: INFO
+    com.apus.base: INFO
+    org.hibernate.sql: INFO
+    org.hibernate.type: INFO
+    org.springframework.orm.jpa: INFO
+    org.springframework.transaction: INFO
+    org.hibernate.engine.transaction.internal.TransactionImpl: INFO
+
+application:
+  validator:
+    enable: true
+  system:
+    testing:
+      enable: true
