@@ -36,6 +36,4 @@ public class Product extends BaseEntity {
     @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;  // Giá bán
 
-    @Column(name = "size", columnDefinition = "TEXT")
-    private String size;  // Kích thước
 }

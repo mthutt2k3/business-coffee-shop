@@ -17,7 +17,10 @@ public class Voucher extends BaseEntity {
     
     @Column(columnDefinition = "TEXT")
     private String description;
-    
+
+    @Column(name = "min_order_value")
+    private double minOrderValue;
+
     private double coin;
     
     @Column(columnDefinition = "TEXT")

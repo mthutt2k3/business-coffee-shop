@@ -13,7 +13,6 @@ public class OrderDetail extends BaseEntity {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     
-    private String size;
     private int quantity;
     private double unitPrice;
     private double totalPrice;
