@@ -5,12 +5,13 @@ import com.business.coffeshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/products")
+@Controller
+@RequestMapping("/index")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -18,8 +19,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
+    public String getAllProducts() {
+        return "product/customer/customer-product-list";
     }
 
     @GetMapping("/{id}")
