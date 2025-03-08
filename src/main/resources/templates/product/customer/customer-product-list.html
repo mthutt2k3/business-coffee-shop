@@ -27,12 +27,6 @@
 
 <body>
 
-<!-- Spinner Start -->
-<div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-    <div class="spinner-grow text-primary" role="status"></div>
-</div>
-<!-- Spinner End -->
-
 <!-- Gọi Navbar từ layout.html -->
 <div th:replace="~{shared/cust/layout :: navbar}"></div>
 
@@ -86,7 +80,6 @@
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                             <label for="fruits">Default Sorting:</label>
                             <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3">
-<!--                                    form="fruitform"-->
                                 <option value="volvo">Nothing</option>
                                 <option value="saab">Popularity</option>
                                 <option value="opel">Organic</option>
