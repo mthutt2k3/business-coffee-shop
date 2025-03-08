@@ -221,7 +221,6 @@
                                                         </div>
                                                     </th:block>
                                                 </a>
-
                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                                     <span th:text="${product.categoryName}"></span>
                                                 </div>
@@ -230,22 +229,26 @@
                                                     <h4>
                                                         <a th:href="@{/product/{id}(id=${product.id})}" th:text="${product.productName}" class="text-dark text-decoration-none"></a>
                                                     </h4>
-                                                    <p th:text="${product.description}"></p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="text-dark fs-5 fw-bold mb-0" th:text="${product.originalPrice}"></p>
-                                                        <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
-                                                        </a>
+                                                    <!-- Hiển thị giá gốc, giảm giá và phần trăm giảm -->
+                                                    <div class="row d-flex justify-content-between align-items-center flex-nowrap">
+                                                        <div class="col-auto d-flex align-items-center">
+                                                            <span class="text-decoration-line-through me-2" th:text="${product.originalPrice}"></span>
+                                                            <span class="discount-badge px-2 rounded" th:text="'-' + ${product.discountPercentage} + '%'"></span>
+                                                            <p class="text-danger fs-4 fw-bold mb-0 ms-2" th:text="${product.sellingPrice}"></p>
+                                                        </div>
                                                     </div>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to Cart
+                                                    </a>
+                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Buy now
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </th:block>
                                 </div>
                             </div>
-
-
-
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
                                     <a href="#" class="rounded">&laquo;</a>
@@ -267,7 +270,32 @@
 </div>
 <!-- Fruits Shop End-->
 
+<style>
+    .text-decoration-line-through {
+        text-decoration: line-through;
+        font-size: 14px;
+        color: #939089;
+    }
 
+    .discount-badge {
+        font-size: 0.9rem;
+        font-weight: bold;
+        background-color: #ffc107; /* Màu vàng */
+        color: #000;
+    }
+
+    .btn {
+        white-space: nowrap;  /* Ngăn nút bị xuống dòng */
+    }
+
+
+    .text-danger {
+        color: red !important;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+</style>
 <!-- Footer Start -->
 <div th:replace="~{shared/cust/layout :: footer}"></div>
 

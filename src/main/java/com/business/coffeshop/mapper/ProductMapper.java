@@ -1,5 +1,6 @@
 package com.business.coffeshop.mapper;
 
+import com.business.coffeshop.dto.MarketerProductDto;
 import com.business.coffeshop.dto.ProductDto;
 import com.business.coffeshop.entity.Product;
 import com.business.coffeshop.helper.StringHelper;
@@ -28,9 +29,17 @@ public abstract class ProductMapper {
             @Mapping(source = "category.categoryName", target = "categoryName"),
             @Mapping(source = "imageUrl", target = "imageUrls", qualifiedByName = "splitImageUrl"),  // ImageUrl is a List in DTO, handle conversion if necessary
             @Mapping(source = "originalPrice", target = "originalPrice", qualifiedByName = "getCurrencyFormat"),
-            @Mapping(source = "sellingPrice", target = "sellingPrice", qualifiedByName = "getCurrencyFormat")
+            @Mapping(source = "sellingPrice", target = "sellingPrice", qualifiedByName = "getCurrencyFormat"),
+            @Mapping(target = "discountPercentage", expression = "java(calculateDiscountPercentage(product.getOriginalPrice(), product.getSellingPrice()))")
+
     })
     public abstract ProductDto toProductDto(Product product);
+
+    @Mappings({
+            @Mapping(source = "originalPrice", target = "originalPrice", qualifiedByName = "getCurrencyFormat"),
+            @Mapping(source = "sellingPrice", target = "sellingPrice", qualifiedByName = "getCurrencyFormat")
+    })
+    public abstract MarketerProductDto toMarketerProductDto(Product product);
 
     // Convert List<String> to String (comma-separated)
     @Named("convertListToString")
@@ -52,4 +61,15 @@ public abstract class ProductMapper {
     public double parseCurrency(String price) {
         return StringHelper.parseCurrency(price);
     }
+
+    @Named("calculateDiscountPercentage")
+    public int calculateDiscountPercentage(double originalPrice, double sellingPrice) {
+        if (originalPrice <= 0) {
+            return 0; // Tránh chia cho 0
+        }
+
+        double discountPercentage = ((originalPrice - sellingPrice) / originalPrice) * 100;
+        return (int) Math.round(discountPercentage); // Làm tròn số nguyên
+    }
+
 }

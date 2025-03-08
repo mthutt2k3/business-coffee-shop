@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping("business-coffeeshop/product")
 @RequiredArgsConstructor
 public class ProductController {
 
@@ -19,27 +19,40 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping
+    //===================================FOR CUSTOMER========================================
+    @GetMapping("customer-product-list")
     public String showProductList(Model model) {
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
         return "product/customer/customer-product-list";  // Trả về trang danh sách sản phẩm
     }
-
-    @GetMapping("marketer")
-    public String showMarketerProductList(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
-        return "product/marketer/marketer-add-product";  // Trả về trang danh sách sản phẩm
-    }
-
-
-    @GetMapping("/customer/customer-product-list/{id}")
+    @GetMapping("/customer-product-detail/{id}")
     public String getProductDetail(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
         return "product/customer/customer-product-detail";  // Trả về trang chi tiết sản phẩm
     }
+
+    //===================================FOR BACKOFFICE========================================
+
+    @GetMapping("marketer-product-list")
+    public String showMarketerProductList(Model model) {
+        model.addAttribute("products", productService.getAllMarketerProducts());
+        return "product/marketer/marketer-product-list";  // Trả về trang danh sách sản phẩm
+    }
+
+    @GetMapping("marketer-product-detail/{id}")
+    public String showMarketerProductDetail(@PathVariable Long id, Model model) {
+        model.addAttribute("product", productService.getMarketerProductById(id));
+        return "product/marketer/marketer-product-detail";  // Trả về trang danh sách sản phẩm
+    }
+    @GetMapping("marketer-product-edit/{id}")
+    public String showMarketerProductEditForm(@PathVariable Long id, Model model) {
+        model.addAttribute("product", productService.getMarketerProductById(id));
+        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+        return "product/marketer/marketer-update-product";  // Trả về trang danh sách sản phẩm
+    }
+
 //
 //    @GetMapping("/create")
 //    public String showCreateForm(Model model) {

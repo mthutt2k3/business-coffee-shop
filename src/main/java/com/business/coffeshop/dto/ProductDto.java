@@ -28,8 +28,8 @@ public class ProductDto {
 
     private String originalPrice;  // Giá gốc
 
-
-
     private String sellingPrice;  // Giá bán
+
+    private int discountPercentage;
 
 }

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2-bootstrap-theme/select2-bootstrap.min.css}">
+    <!-- End plugin css for this page -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/backoffice/css/style.css}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" th:href="@{/backoffice/images/favicon.png}" />
+</head>
+<body>
+<div class="container-scroller">
+    <!-- Import Navbar -->
+    <div th:replace="shared/backoffice/layout :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- Import Sidebar -->
+        <div th:replace="shared/backoffice/layout :: sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title"> Basic Tables </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Basic tables</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 class="card-title fw-bold display-5" >Product List</h2>
+
+                                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw btn-sm">
+                                    Add new product
+                                </button>
+                                </p>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th> Product Image </th>
+                                        <th> Product Name </th>
+                                        <th> Category Name </th>
+                                        <th> Original Price </th>
+                                        <th> Selling Price </th>
+                                        <th> Status </th>
+                                        <th> Action </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="product : ${products}">
+
+                                        <td class="py-1">
+                                            <a th:href="${product.getImageUrl}" target="_blank">
+                                                <img th:src="${product.imageUrl}" alt="Product Image"
+                                                     style="width: 50px; height: 50px; border-radius: 50%;" />
+                                            </a>
+                                        </td>
+
+                                        <td th:text="${product.productName}"></td>
+                                        <td th:text="${product.category.categoryName}"></td>
+                                        <td th:text="${product.originalPrice}"></td>
+                                        <td th:text="${product.sellingPrice}"></td>
+
+
+                                        <td>
+                                            <label th:classappend="${product.status == 'Active' ? 'badge badge-success' : 'badge badge-danger'}"
+                                                   th:text="${product.status}"></label>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <a th:href="@{'/business-coffeeshop/product/marketer-product-detail/' + ${product.id}}" class="view-btn"><i class="fa fa-eye"></i></a>
+                                                <a th:href="@{'/business-coffeeshop/product/marketer-product-edit/' + ${product.id}}" class="edit-btn"><i class="fa fa-edit"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script th:src="@{/backoffice/vendors/js/vendor.bundle.base.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/backoffice/vendors/select2/select2.min.js}"></script>
+<script th:src="@{/backoffice/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/backoffice/js/off-canvas.js}"></script>
+<script th:src="@{/backoffice/js/misc.js}"></script>
+<script th:src="@{/backoffice/js/settings.js}"></script>
+<script th:src="@{/backoffice/js/todolist.js}"></script>
+<script th:src="@{/backoffice/js/jquery.cookie.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script th:src="@{/backoffice/js/file-upload.js}"></script>
+<script th:src="@{/backoffice/js/typeahead.js}"></script>
+<script th:src="@{/backoffice/js/select2.js}"></script>>
+</body>
+</html>
