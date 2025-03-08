@@ -1,13 +1,14 @@
 package com.business.coffeshop.service;
 
+import com.business.coffeshop.dto.ProductDto;
 import com.business.coffeshop.entity.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    List<Product> getAllProducts();
+    List<ProductDto> getAllProducts();
 
-    Product getProductById(Long id);
+    ProductDto getProductById(Long id);
 
     Product createProduct(Product product);
 

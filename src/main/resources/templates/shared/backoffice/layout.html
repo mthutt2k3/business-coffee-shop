@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2-bootstrap-theme/select2-bootstrap.min.css}">
+    <!-- End plugin css for this page -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/backoffice/css/style.css}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" th:href="@{/backoffice/images/favicon.png}" />
+
+</head>
+<body>
+
+<div class="container-scroller">
+
+    <!-- Navbar -->
+    <nav th:fragment="navbar" class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
+            <a class="navbar-brand brand-logo" href="/"><img th:src="@{/backoffice/images/logo.svg}" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="/"><img th:src="@{/backoffice/images/logo-mini.svg}" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+            <button class="navbar-toggler navbar-toggler align-self-center" type="button">
+                <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav navbar-nav-right">
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown">
+                        <div class="nav-profile-img">
+                            <img th:src="@{/backoffice/images/faces/face1.jpg}" alt="image">
+                        </div>
+                        <div class="nav-profile-text">
+                            <p class="mb-1 text-black">David Greymaax</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Sidebar -->
+    <nav th:fragment="sidebar" class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <span class="menu-title">Dashboard</span>
+                    <i class="mdi mdi-home menu-icon"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users">
+                    <span class="menu-title">Users</span>
+                    <i class="mdi mdi-account menu-icon"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/products">
+                    <span class="menu-title">Products</span>
+                    <i class="mdi mdi-cube menu-icon"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Sidebar End -->
+
+    </div>
+</div>
+
+!-- container-scroller -->
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script th:src="@{/backoffice/vendors/js/vendor.bundle.base.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/backoffice/vendors/select2/select2.min.js}"></script>
+<script th:src="@{/backoffice/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/backoffice/js/off-canvas.js}"></script>
+<script th:src="@{/backoffice/js/misc.js}"></script>
+<script th:src="@{/backoffice/js/settings.js}"></script>
+<script th:src="@{/backoffice/js/todolist.js}"></script>
+<script th:src="@{/backoffice/js/jquery.cookie.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script th:src="@{/backoffice/js/file-upload.js}"></script>
+<script th:src="@{/backoffice/js/typeahead.js}"></script>
+<script th:src="@{/backoffice/js/select2.js}"></script>
+<!-- End custom js for this page -->
+
+</body>
+</html>
