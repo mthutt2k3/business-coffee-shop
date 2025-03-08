@@ -8,4 +8,6 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getAllProductCategories();
     List<CategoryDto> getAllCustomerProductCategories();
+
+    Category getCategoryActiveById(Long categoryId);
 }
