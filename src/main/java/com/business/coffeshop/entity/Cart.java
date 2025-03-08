@@ -1,13 +1,18 @@
 package com.business.coffeshop.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "cart")
-public class Cart extends BaseEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class Cart{
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
@@ -16,8 +21,6 @@ public class Cart extends BaseEntity {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
     
-    private String size;
     private int quantity;
-    private double price;
-    private double totalPrice;
+
 }

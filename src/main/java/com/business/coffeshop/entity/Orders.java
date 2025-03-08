@@ -1,11 +1,15 @@
 package com.business.coffeshop.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "orders")
+@Getter
+@Setter
 public class Orders extends BaseEntity {
     @Column(name = "order_code", nullable = false, unique = true, length = 50)
     private String orderCode;

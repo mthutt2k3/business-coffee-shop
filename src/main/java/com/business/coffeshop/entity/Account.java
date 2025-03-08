@@ -2,6 +2,7 @@ package com.business.coffeshop.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,10 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Account extends BaseEntity {
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+
+    private String roleCode;
     
     private String msisdn;
     

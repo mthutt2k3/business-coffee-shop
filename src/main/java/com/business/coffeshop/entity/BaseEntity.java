@@ -26,8 +26,7 @@ public class BaseEntity {
 
     @LastModifiedBy
     private Long updatedBy;
-    private Date deletedAt;
-    private Long deletedBy;
+    private Boolean deleted;
 
     public Long getId() {
         return id;
@@ -69,19 +68,11 @@ public class BaseEntity {
         this.updatedBy = updatedBy;
     }
 
-    public Date getDeletedAt() {
-        return deletedAt;
+    public Boolean getDeleted() {
+        return deleted;
     }
 
-    public void setDeletedAt(Date deletedAt) {
-        this.deletedAt = deletedAt;
-    }
-
-    public Long getDeletedBy() {
-        return deletedBy;
-    }
-
-    public void setDeletedBy(Long deletedBy) {
-        this.deletedBy = deletedBy;
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

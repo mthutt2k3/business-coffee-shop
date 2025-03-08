@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2-bootstrap-theme/select2-bootstrap.min.css}">
+    <!-- End plugin css for this page -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/backoffice/css/style.css}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" th:href="@{/backoffice/images/favicon.png}" />
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="shared/backoffice/layout :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <div th:replace="shared/backoffice/layout :: sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title"> Form elements </h3>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row"> <!-- Thêm hàng để chia cột đúng -->
+                                    <!-- Product Image -->
+                                    <div class="col-md-5">
+                                        <img th:src="${product.imageUrl}" alt="Product Image" class="img-fluid">
+                                    </div>
+                                    <!-- Product Details -->
+                                    <div class="col-md-7">
+                                        <!-- Tên sản phẩm -->
+                                        <h2 class="product-title" th:text="${product.productName}"></h2>
+
+
+                                        <p class="product-price">
+                                            <span th:text="${product.sellingPrice}"></span>
+                                            <span class="original-price ms-2" th:text="${product.originalPrice}"></span>
+                                        </p>
+
+                                        <!-- Mô tả sản phẩm -->
+                                        <p class="text-muted" th:text="${product.description}"></p>
+
+                                        <!-- Chi tiết sản phẩm -->
+                                        <div class="product-info mt-3">
+                                            <p><strong>Category:</strong> <span th:text="${product.category.categoryName}"></span></p>
+                                            <p><strong>Created date:</strong> <span th:text="${#temporals.format(product.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+                                                <strong>By</strong> <span th:text="${product.createBy}"></span>
+                                            </p>
+                                            <p><strong>Status:</strong>
+                                                <span th:text="${product.status}"
+                                                      th:classappend="${product.status == 'Active' ? 'product-status text-success font-weight-bold' : 'product-status text-danger font-weight-bold'}"
+                                                      class="badge"></span>
+                                            </p>
+
+                                        </div>
+
+                                        <!-- Nút điều hướng -->
+                                        <div class="d-flex justify-content-end gap-2 mt-4">
+                                            <a th:href="@{'/business-coffeeshop/product/marketer-product-edit/' + ${product.id}}" class="btn btn-gradient-dark btn-md px-4 py-2">
+                                                <i class="fa fa-arrow-left"></i> Back
+                                            </a>
+                                            <a th:href="@{'/business-coffeeshop/product/marketer-product-edit/' + ${product.id}}" class="btn btn-gradient-success btn-md px-4 py-2">
+                                                <i class="fa fa-pencil"></i> Edit
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </div> <!-- End row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script th:src="@{/backoffice/vendors/js/vendor.bundle.base.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/backoffice/vendors/select2/select2.min.js}"></script>
+<script th:src="@{/backoffice/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/backoffice/js/off-canvas.js}"></script>
+<script th:src="@{/backoffice/js/misc.js}"></script>
+<script th:src="@{/backoffice/js/settings.js}"></script>
+<script th:src="@{/backoffice/js/todolist.js}"></script>
+<script th:src="@{/backoffice/js/jquery.cookie.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script th:src="@{/backoffice/js/file-upload.js}"></script>
+<script th:src="@{/backoffice/js/typeahead.js}"></script>
+<script th:src="@{/backoffice/js/select2.js}"></script>>
+</body>
+</html>

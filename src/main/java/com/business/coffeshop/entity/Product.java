@@ -3,19 +3,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "customer-product-list.html")
-@Getter
-@Setter
+@Table(name = "product")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Data
 public class Product extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
     
     @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
     
     @Column(name = "productName", nullable = false, length = 100)
@@ -36,6 +34,4 @@ public class Product extends BaseEntity {
     @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;  // Giá bán
 
-    @Column(name = "size", columnDefinition = "TEXT")
-    private String size;  // Kích thước
 }

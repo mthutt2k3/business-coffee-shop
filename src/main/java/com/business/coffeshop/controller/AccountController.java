@@ -1,21 +1,20 @@
 package com.business.coffeshop.controller;
 
-import com.business.coffeshop.dto.AuthRequest;
-import com.business.coffeshop.dto.AuthResponse;
-import com.business.coffeshop.dto.RegisterRequest;
-import com.business.coffeshop.entity.Account;
+import com.business.coffeshop.dto.RegisterAccountDto;
 import com.business.coffeshop.service.AccountService;
 import com.business.coffeshop.utils.JwtUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/auth")
+@Controller
+@RequestMapping("business-coffeeshop/account")
 @RequiredArgsConstructor
 public class AccountController {
 
@@ -24,31 +23,42 @@ public class AccountController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    // ✅ API ĐĂNG NHẬP (Lấy JWT Token)
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getMsisdn(), request.getPassword())
-        );
-
-        String token = jwtUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthResponse(token));
+    @GetMapping("customer-login")
+    public String showLoginForm() {
+        return "account/customer/customer-login";
     }
 
-    // ✅ API ĐĂNG KÝ (Tạo tài khoản mới)
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        if (accountService.existsByMsisdn(request.getMsisdn())) {
-            return ResponseEntity.badRequest().body("Số điện thoại đã được đăng ký!");
+    @PostMapping("customer-login")
+    public String login(@RequestParam String msisdn, @RequestParam String password, Model model) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(msisdn, password)
+            );
+            String token = jwtUtil.generateToken(authentication);
+            model.addAttribute("jwtToken", token);
+
+            // ✅ Điều hướng dựa vào role
+            return "redirect:business-coffeeshop/product/customer-product-list";
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid credentials!");
+            return "account/customer/customer-login";
         }
-
-        Account newAccount = new Account();
-        newAccount.setMsisdn(request.getMsisdn());
-        newAccount.setPassword(passwordEncoder.encode(request.getPassword()));
-        newAccount.setAccountName(request.getAccountName());
-        newAccount.setAddress(request.getAddress());
-
-        accountService.save(newAccount);
-        return ResponseEntity.ok("Tài khoản đã được tạo thành công!");
     }
+
+    @GetMapping("/customer-register")
+    public String showCustomerRegisterForm(Model model) {
+        model.addAttribute("registerAccount", new RegisterAccountDto());
+        return "account/customer/customer-register";
+    }
+    @PostMapping("/customer-register")
+    public String registerCustomerAccount(@Valid @ModelAttribute("registerAccount") RegisterAccountDto registerAccount, Model model) {
+        model.addAttribute("registerAccount", registerAccount);
+        try {
+            accountService.registerCustomerAccount(registerAccount);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An unexpected error occurred: " + e.getMessage());
+        }
+        return "account/customer/customer-register";
+    }
+
 }
