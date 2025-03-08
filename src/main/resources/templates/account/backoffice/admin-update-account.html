@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/font-awesome/css/font-awesome.min.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2/select2.min.css}">
+    <link rel="stylesheet" th:href="@{/backoffice/vendors/select2-bootstrap-theme/select2-bootstrap.min.css}">
+    <!-- End plugin css for this page -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" th:href="@{/backoffice/css/style.css}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" th:href="@{/backoffice/images/favicon.png}" />
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <div th:replace="shared/backoffice/layout :: navbar"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:../../partials/_sidebar.html -->
+        <div th:replace="shared/backoffice/layout :: sidebar"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Update Product</h3>
+                                <form class="form-sample" th:action="@{/products/update}" method="post" th:object="${product}">
+                                    <input type="hidden" th:field="*{id}" /> <!-- Truyền ID để update -->
+                                    <p class="card-description" th:text="${product.productName}"></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label " style="padding-right: 10px">Product name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" th:field="*{productName}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Category</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-select" th:field="*{category}">
+                                                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label " style="padding-right: 10px">Original Price</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="Gia goc"
+                                                           th:field="*{originalPrice}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label " style="padding-right: 10px">Selling Price</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="Gia ban chinh thuc"
+                                                           th:field="*{sellingPrice}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Status</label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="status"
+                                                                   th:value="ACT" th:checked="${product.status == 'ACT'}"> Active
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="status"
+                                                                   th:value="IACT" th:checked="${product.status == 'IACT'}"> Inactive
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleTextarea1">Description</label>
+                                                <textarea class="form-control" id="exampleTextarea1" rows="4" th:field="*{description}" ></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>File upload</label>
+                                                <div class="mb-3">
+                                                    <div class="image-upload-box" id="uploadBox">
+                                                        <p id="uploadText">Click or Paste Image Here</p>
+                                                        <input type="file" id="imageInput" accept="image/*" hidden>
+
+                                                        <!-- Hiển thị ảnh nếu có -->
+                                                        <img id="previewImage" class="image-preview"
+                                                             th:src="${product.imageUrl != null ? product.imageUrl : ''}"
+                                                             th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}" />
+
+                                                        <button type="button" id="removeImageBtn" class="remove-btn"
+                                                                th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}">
+                                                            <i class="fa fa-window-close"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 d-flex gap-3 align-items-center justify-content-center">
+                                            <a href="submit-page.html">
+                                                <button type="button" class="btn btn-gradient-primary btn-icon-text">
+                                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit
+                                                </button>
+                                            </a>
+                                            <a href="back-page.html">
+                                                <button type="button" class="btn btn-gradient-dark btn-icon-text">
+                                                    <i class="fa fa-arrow-circle-left"></i> Back
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+            <!-- partial:../../partials/_footer.html -->
+            <footer class="footer">
+                <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+                </div>
+            </footer>
+            <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>
+<script>
+    const uploadBox = document.getElementById("uploadBox");
+    const imageInput = document.getElementById("imageInput");
+    const previewImage = document.getElementById("previewImage");
+    const removeImageBtn = document.getElementById("removeImageBtn");
+    const uploadText = document.getElementById("uploadText");
+
+    // Click vào hộp tải lên để chọn ảnh từ file
+    uploadBox.addEventListener("click", () => imageInput.click());
+
+    // Khi người dùng chọn ảnh từ input file
+    imageInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => showImage(reader.result);
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Hỗ trợ dán ảnh từ clipboard
+    document.addEventListener("paste", (event) => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        for (let item of items) {
+            if (item.type.indexOf("image") !== -1) {
+                const blob = item.getAsFile();
+                const reader = new FileReader();
+                reader.onload = () => showImage(reader.result);
+                reader.readAsDataURL(blob);
+            }
+        }
+    });
+
+    // Hiển thị ảnh và hiển thị nút Remove
+    function showImage(imageSrc) {
+        previewImage.src = imageSrc;
+        previewImage.style.display = "block";
+        uploadText.style.display = "none";
+        removeImageBtn.style.display = "block";
+    }
+
+    // Xóa ảnh khi bấm vào nút Remove
+    function removeImage(event) {
+        event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+        previewImage.src = "";
+        previewImage.style.display = "none";
+        uploadText.style.display = "block";
+        imageInput.value = ""; // Xóa file đã chọn
+        removeImageBtn.style.display = "none";
+    }
+
+    // Gán sự kiện click cho nút Remove
+    removeImageBtn.addEventListener("click", removeImage);
+</script>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script th:src="@{/backoffice/vendors/js/vendor.bundle.base.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/backoffice/vendors/select2/select2.min.js}"></script>
+<script th:src="@{/backoffice/vendors/typeahead.js/typeahead.bundle.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/backoffice/js/off-canvas.js}"></script>
+<script th:src="@{/backoffice/js/misc.js}"></script>
+<script th:src="@{/backoffice/js/settings.js}"></script>
+<script th:src="@{/backoffice/js/todolist.js}"></script>
+<script th:src="@{/backoffice/js/jquery.cookie.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page -->
+<script th:src="@{/backoffice/js/file-upload.js}"></script>
+<script th:src="@{/backoffice/js/typeahead.js}"></script>
+<script th:src="@{/backoffice/js/select2.js}"></script>>
+<!-- End custom js for this page -->
+</body>
+</html>

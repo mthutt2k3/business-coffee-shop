@@ -44,11 +44,11 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="card-title fw-bold display-5" >Account List</h2>
+                                <h2 class="card-title fw-bold display-5" >Product List</h2>
 
                                 <a th:href="@{/business-coffeeshop/product/marketer-product-add}">
                                     <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw btn-sm">
-                                        Add new account
+                                        Add new product
                                     </button>
                                 </a>
 
@@ -56,39 +56,39 @@
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th> Account Image </th>
-                                        <th> Account Name </th>
-                                        <th> Address </th>
-                                        <th> Phone number </th>
-                                        <th> Role Code </th>
+                                        <th> Product Image </th>
+                                        <th> Product Name </th>
+                                        <th> Category Name </th>
+                                        <th> Original Price </th>
+                                        <th> Selling Price </th>
                                         <th> Status </th>
                                         <th> Action </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="account : ${accounts}">
+                                    <tr th:each="product : ${products}">
 
                                         <td class="py-1">
-                                            <a th:href="${account.imageUrl}" target="_blank">
-                                                <img th:src="${account.imageUrl}" alt="Product Image"
+                                            <a th:href="${product.getImageUrl}" target="_blank">
+                                                <img th:src="${product.imageUrl}" alt="Product Image"
                                                      style="width: 50px; height: 50px; border-radius: 50%;" />
                                             </a>
                                         </td>
 
-                                        <td th:text="${account.accountName}"></td>
-                                        <td th:text="${account.address}"></td>
-                                        <td th:text="${account.msisdn}"></td>
-                                        <td th:text="${account.roleCode}"></td>
+                                        <td th:text="${product.productName}"></td>
+                                        <td th:text="${product.category.categoryName}"></td>
+                                        <td th:text="${product.originalPrice}"></td>
+                                        <td th:text="${product.sellingPrice}"></td>
 
 
                                         <td>
-                                            <label th:classappend="${account.status == 'Active' ? 'badge badge-success' : 'badge badge-danger'}"
-                                                   th:text="${account.status}"></label>
+                                            <label th:classappend="${product.status == 'Active' ? 'badge badge-success' : 'badge badge-danger'}"
+                                                   th:text="${product.status}"></label>
                                         </td>
                                         <td>
                                             <div class="action-buttons">
-                                                <a th:href="@{'/business-coffeeshop/account/admin-account-detail/' + ${account.id}}" class="view-btn"><i class="fa fa-eye"></i></a>
-                                                <a th:href="@{'/business-coffeeshop/account/admin-account-edit/' + ${account.id}}" class="edit-btn"><i class="fa fa-edit"></i></a>
+                                                <a th:href="@{'/business-coffeeshop/product/marketer-product-detail/' + ${product.id}}" class="view-btn"><i class="fa fa-eye"></i></a>
+                                                <a th:href="@{'/business-coffeeshop/product/marketer-product-edit/' + ${product.id}}" class="edit-btn"><i class="fa fa-edit"></i></a>
                                             </div>
                                         </td>
                                     </tr>

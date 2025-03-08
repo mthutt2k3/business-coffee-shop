@@ -8,6 +8,7 @@ import com.business.coffeshop.entity.Category;
 import com.business.coffeshop.entity.Product;
 import com.business.coffeshop.mapper.ProductMapper;
 import com.business.coffeshop.repository.ProductRepository;
+import com.business.coffeshop.service.AccountService;
 import com.business.coffeshop.service.CategoryService;
 import com.business.coffeshop.service.ProductService;
 import com.business.coffeshop.utils.FileUtils;
@@ -26,6 +27,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private AccountService accountService;
+
 
     private final ProductMapper productMapper;
 
@@ -135,6 +140,9 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(addProductRequest.getDescription());
         product.setCategory(category);
         product.setImageUrl(imageUrl);
+        product.setStatus(Boolean.TRUE.equals(addProductRequest.getStatus()) ? CommonStatusEnum.ACT.getDescription() : CommonStatusEnum.IACT.getDescription());
+        //mock data
+        product.setAccount(accountService.getAccountById(6L));
         return product;
     }
 

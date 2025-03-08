@@ -1,5 +1,6 @@
 package com.business.coffeshop.controller;
 
+import com.business.coffeshop.dto.AuthRequest;
 import com.business.coffeshop.dto.RegisterAccountDto;
 import com.business.coffeshop.service.AccountService;
 import com.business.coffeshop.utils.JwtUtil;
@@ -24,21 +25,22 @@ public class AccountController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("customer-login")
-    public String showLoginForm() {
+    public String showLoginForm(Model model) {
+        model.addAttribute("authRequest", new AuthRequest());
         return "account/customer/customer-login";
     }
 
     @PostMapping("customer-login")
-    public String login(@RequestParam String msisdn, @RequestParam String password, Model model) {
+    public String login(@Valid @ModelAttribute("authRequest") AuthRequest authRequest, Model model) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(msisdn, password)
+                    new UsernamePasswordAuthenticationToken(authRequest.getMsisdn(), authRequest.getPassword())
             );
             String token = jwtUtil.generateToken(authentication);
             model.addAttribute("jwtToken", token);
+            model.addAttribute("authRequest", authRequest);
 
-            // ✅ Điều hướng dựa vào role
-            return "redirect:business-coffeeshop/product/customer-product-list";
+            return "redirect:/business-coffeeshop/product/customer-product-list";
         } catch (Exception e) {
             model.addAttribute("error", "Invalid credentials!");
             return "account/customer/customer-login";
@@ -50,6 +52,7 @@ public class AccountController {
         model.addAttribute("registerAccount", new RegisterAccountDto());
         return "account/customer/customer-register";
     }
+
     @PostMapping("/customer-register")
     public String registerCustomerAccount(@Valid @ModelAttribute("registerAccount") RegisterAccountDto registerAccount, Model model) {
         model.addAttribute("registerAccount", registerAccount);
@@ -57,7 +60,28 @@ public class AccountController {
             accountService.registerCustomerAccount(registerAccount);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "An unexpected error occurred: " + e.getMessage());
+            return "redirect:customer-register";
         }
-        return "account/customer/customer-register";
+        return "redirect:customer-login";
     }
+
+    //==========================BACKOFFICE========================================
+    @GetMapping("/admin-account-list")
+    public String showAccountListForm(Model model) {
+        model.addAttribute("accounts", accountService.getAllAccount());
+        return "account/backoffice/admin-account-list";
+    }
+
+    @GetMapping("/admin-account-detail/{id}")
+    public String showAccountDetailForm(@PathVariable Long id, Model model) {
+        model.addAttribute("account", accountService.getAccountDtoById(id));
+        return "account/backoffice/admin-account-detail";
+    }
+
+//    @GetMapping("/admin-account-add")
+//    public String showAccountAddForm(@Valid @ModelAttribute("registerAccount") RegisterAccountDto registerAccount, Model model) {
+//        model.addAttribute("account", accountService.getAccountDtoById(id));
+//        return "account/backoffice/admin-account-detail";
+//    }
+
 }

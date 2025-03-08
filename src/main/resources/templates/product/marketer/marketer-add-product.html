@@ -57,7 +57,7 @@
                                                 <label class="col-sm-3 col-form-label">Category</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" th:field="*{categoryId}">
-                                                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                                                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
                                                     </select>
                                                     <small class="text-danger" th:if="${#fields.hasErrors('categoryId')}" th:text="${#fields.errors('categoryId')}"></small>
                                                 </div>
@@ -127,7 +127,7 @@
                                                 <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit
                                             </button>
 
-                                            <a href="back-page.html">
+                                            <a th:href="@{/business-coffeeshop/product/marketer-product-list}">
                                                 <button type="button" class="btn btn-gradient-dark btn-icon-text">
                                                     <i class="fa fa-arrow-circle-left"></i> Back
                                                 </button>
