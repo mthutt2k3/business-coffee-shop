@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "customer-product-list.html")
+@Table(name = "product")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,11 +11,11 @@ import lombok.*;
 @Builder
 public class Product extends BaseEntity {
     @ManyToOne
-    @JoinColumn(name = "accountId", nullable = false)
+    @JoinColumn(name = "account_id", nullable = false)
     private Account account;
     
     @ManyToOne
-    @JoinColumn(name = "categoryId", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
     
     @Column(name = "productName", nullable = false, length = 100)

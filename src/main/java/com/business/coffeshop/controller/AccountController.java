@@ -1,21 +1,18 @@
 package com.business.coffeshop.controller;
 
-import com.business.coffeshop.dto.AuthRequest;
-import com.business.coffeshop.dto.AuthResponse;
-import com.business.coffeshop.dto.RegisterRequest;
-import com.business.coffeshop.entity.Account;
 import com.business.coffeshop.service.AccountService;
 import com.business.coffeshop.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/auth")
+@Controller
+@RequestMapping("/${application-context-name}/private/v1/account")
 @RequiredArgsConstructor
 public class AccountController {
 
@@ -24,31 +21,33 @@ public class AccountController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
-    // ✅ API ĐĂNG NHẬP (Lấy JWT Token)
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "account/customer-login";
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getMsisdn(), request.getPassword())
-        );
+    public String login(@RequestParam String msisdn, @RequestParam String password, Model model) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(msisdn, password)
+            );
+            String token = jwtUtil.generateToken(authentication);
+            model.addAttribute("jwtToken", token);
 
-        String token = jwtUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthResponse(token));
-    }
+            // ✅ Lấy role của user từ authentication
+            String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-    // ✅ API ĐĂNG KÝ (Tạo tài khoản mới)
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        if (accountService.existsByMsisdn(request.getMsisdn())) {
-            return ResponseEntity.badRequest().body("Số điện thoại đã được đăng ký!");
+            // ✅ Điều hướng dựa vào role
+            if ("ROLE_ADMIN".equals(role)) {
+                return "redirect:/admin/dashboard";
+            } else {
+                return "redirect:/customer/products";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid credentials!");
+            return "account/login";
         }
-
-        Account newAccount = new Account();
-        newAccount.setMsisdn(request.getMsisdn());
-        newAccount.setPassword(passwordEncoder.encode(request.getPassword()));
-        newAccount.setAccountName(request.getAccountName());
-        newAccount.setAddress(request.getAddress());
-
-        accountService.save(newAccount);
-        return ResponseEntity.ok("Tài khoản đã được tạo thành công!");
     }
+
 }
