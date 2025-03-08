@@ -128,15 +128,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Product getProductEntity(AddProductRequest addProductRequest, String imageUrl, Category category) {
-        return Product.builder()
-                .productName(addProductRequest.getProductName())
-                .originalPrice(addProductRequest.getOriginalPrice())
-                .sellingPrice(addProductRequest.getSellingPrice())
-                .description(addProductRequest.getDescription())
-                .status(addProductRequest.getStatus() ? CommonStatusEnum.ACT.getDescription() : CommonStatusEnum.IACT.getDescription())
-                .imageUrl(imageUrl)
-                .category(category)
-                .build();
+        Product product = new Product();
+        product.setProductName(addProductRequest.getProductName());
+        product.setOriginalPrice(addProductRequest.getOriginalPrice());
+        product.setSellingPrice(addProductRequest.getSellingPrice());
+        product.setDescription(addProductRequest.getDescription());
+        product.setCategory(category);
+        product.setImageUrl(imageUrl);
+        return product;
     }
 
 

@@ -56,15 +56,15 @@ public class AccountServiceImpl implements AccountService {
         }
 
         // Tạo mới User
-        Account newAccount = Account.builder()
-                .accountName(registerAccount.getName())
-                .address(registerAccount.getAddress())
-                .msisdn(registerAccount.getMsisdn())
-                .password(passwordEncoder.encode(registerAccount.getPassword()))  // Mã hóa mật khẩu
-                .roleCode(RoleCodeEnum.CUST.name())  // Đặt role là CUSTOMER
-                .build();
+        Account newAccountSaved = new Account();
+        newAccountSaved.setMsisdn(registerAccount.getMsisdn());
+        newAccountSaved.setPassword(passwordEncoder.encode(registerAccount.getPassword()));
+        newAccountSaved.setRoleCode(RoleCodeEnum.CUST.name());
+        newAccountSaved.setAccountName(registerAccount.getName());
+        newAccountSaved.setAddress(registerAccount.getAddress());
+        accountRepository.save(newAccountSaved);
 
-        return accountRepository.save(newAccount);
+        return accountRepository.save(new Account());
     }
 
 }

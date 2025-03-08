@@ -60,5 +60,4 @@ public class AccountController {
         }
         return "account/customer/customer-register";
     }
-
 }
