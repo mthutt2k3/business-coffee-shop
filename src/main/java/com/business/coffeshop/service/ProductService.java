@@ -1,5 +1,6 @@
 package com.business.coffeshop.service;
 
+import com.business.coffeshop.dto.MarketerProductDto;
 import com.business.coffeshop.dto.ProductDto;
 import com.business.coffeshop.entity.Product;
 
@@ -13,4 +14,8 @@ public interface ProductService {
     Product createProduct(Product product);
 
     Product updateProduct(Long id, Product product);
+
+    List<MarketerProductDto>  getAllMarketerProducts();
+
+    MarketerProductDto getMarketerProductById(Long id);
 }

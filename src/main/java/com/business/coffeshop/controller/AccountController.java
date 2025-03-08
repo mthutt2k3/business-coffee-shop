@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/${application-context-name}/private/v1/account")
+@RequestMapping("account")
 @RequiredArgsConstructor
 public class AccountController {
 
@@ -48,6 +48,11 @@ public class AccountController {
             model.addAttribute("error", "Invalid credentials!");
             return "account/login";
         }
+    }
+
+    @GetMapping("/customer/register")
+    public String showCustomerRegisterForm() {
+        return "account/customer/customer-register";
     }
 
 }
