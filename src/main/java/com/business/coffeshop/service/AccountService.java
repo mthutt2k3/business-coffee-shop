@@ -1,8 +1,11 @@
 package com.business.coffeshop.service;
 
+import com.business.coffeshop.dto.AccountDto;
 import com.business.coffeshop.dto.RegisterAccountDto;
 import com.business.coffeshop.entity.Account;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
 
 public interface AccountService {
     UserDetails loadUserByMsisdn(String msisdn);
@@ -12,4 +15,10 @@ public interface AccountService {
     void save(Account newAccount);
 
     Account registerCustomerAccount(RegisterAccountDto registerAccount);
+
+    Account getAccountById(Long i);
+
+    AccountDto getAccountDtoById(Long id);
+
+    List<AccountDto> getAllAccount();
 }

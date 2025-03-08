@@ -66,7 +66,7 @@
                                         <!-- Chi tiết sản phẩm -->
                                         <div class="product-info mt-3">
                                             <p><strong>Category:</strong> <span th:text="${product.category.categoryName}"></span></p>
-                                            <p><strong>Created date:</strong> <span th:text="${#temporals.format(product.createdAt, 'dd/MM/yyyy HH:mm')}"></span>
+                                            <p><strong>Created date:</strong> <span th:text="${product.createdAt}"></span>
                                                 <strong>By</strong> <span th:text="${product.createBy}"></span>
                                             </p>
                                             <p><strong>Status:</strong>

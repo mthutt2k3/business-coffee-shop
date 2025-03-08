@@ -53,7 +53,7 @@
                                                 <label class="col-sm-3 col-form-label">Category</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-select" th:field="*{category}">
-                                                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                                                        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.categoryName}"></option>
                                                     </select>
                                                 </div>
                                             </div>

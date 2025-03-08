@@ -22,10 +22,10 @@ public class BaseEntity {
     private Date updatedAt;
 
     @CreatedBy
-    private Long createdBy;
+    private String createdBy;
 
     @LastModifiedBy
-    private Long updatedBy;
+    private String updatedBy;
     private Boolean deleted;
 
     public Long getId() {
@@ -52,19 +52,19 @@ public class BaseEntity {
         this.updatedAt = updatedAt;
     }
 
-    public Long getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Long createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
-    public Long getUpdatedBy() {
+    public String getUpdatedBy() {
         return updatedBy;
     }
 
-    public void setUpdatedBy(Long updatedBy) {
+    public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy;
     }
 

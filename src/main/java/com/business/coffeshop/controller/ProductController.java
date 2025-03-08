@@ -53,20 +53,20 @@ public class ProductController {
     @GetMapping("marketer-product-edit/{id}")
     public String showMarketerProductEditForm(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getMarketerProductById(id));
-        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+        model.addAttribute("categories", categoryService.getAllProductCategories());
         return "product/marketer/marketer-update-product";  // Trả về trang danh sách sản phẩm
     }
     @GetMapping("marketer-product-add")
     public String showMarketerProductAddForm(Model model) {
         model.addAttribute("product", new AddProductRequest());
-        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+        model.addAttribute("categories", categoryService.getAllProductCategories());
         return "product/marketer/marketer-add-product";  // Trả về trang danh sách sản phẩm
     }
 
     @PostMapping("marketer-product-add")
     public String addProduct(@Valid @ModelAttribute("product") AddProductRequest product, BindingResult result, Model model) {
         model.addAttribute("product", product);
-        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+        model.addAttribute("categories", categoryService.getAllProductCategories());
 
         // Nếu có lỗi validation thì quay lại form nhập liệu
         if (result.hasErrors()) {
