@@ -4,11 +4,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "product")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Data
 public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)

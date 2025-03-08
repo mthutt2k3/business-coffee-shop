@@ -1,9 +1,13 @@
 package com.business.coffeshop.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "cart")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Cart{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
