@@ -1,5 +1,6 @@
 package com.business.coffeshop.mapper;
 
+import com.business.coffeshop.dto.AddProductRequest;
 import com.business.coffeshop.dto.MarketerProductDto;
 import com.business.coffeshop.dto.ProductDto;
 import com.business.coffeshop.entity.Product;
@@ -40,6 +41,7 @@ public abstract class ProductMapper {
             @Mapping(source = "sellingPrice", target = "sellingPrice", qualifiedByName = "getCurrencyFormat")
     })
     public abstract MarketerProductDto toMarketerProductDto(Product product);
+
 
     // Convert List<String> to String (comma-separated)
     @Named("convertListToString")

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -26,5 +27,16 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryDto> getAllCustomerProductCategories() {
         List<CategoryDto> categoryDtos = categoryRepository.findAllCustomerProductCategories();
         return categoryDtos;
+    }
+
+    @Override
+    public Category getCategoryActiveById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElse(null);
+
+        if (category == null || category.getDeleted()) {
+            throw new IllegalArgumentException("Category does not exist or is not active.");
+        }
+
+        return category;
     }
 }

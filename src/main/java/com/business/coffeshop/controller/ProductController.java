@@ -1,11 +1,15 @@
 package com.business.coffeshop.controller;
 
+import com.business.coffeshop.dto.AddProductRequest;
+import com.business.coffeshop.entity.Product;
 import com.business.coffeshop.service.CategoryService;
 import com.business.coffeshop.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -52,30 +56,28 @@ public class ProductController {
         model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
         return "product/marketer/marketer-update-product";  // Trả về trang danh sách sản phẩm
     }
+    @GetMapping("marketer-product-add")
+    public String showMarketerProductAddForm(Model model) {
+        model.addAttribute("product", new AddProductRequest());
+        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+        return "product/marketer/marketer-add-product";  // Trả về trang danh sách sản phẩm
+    }
 
-//
-//    @GetMapping("/create")
-//    public String showCreateForm(Model model) {
-//        model.addAttribute("product", new Product());
-//        return "product/product-form";  // Trả về trang tạo sản phẩm
-//    }
-//
-//    @PostMapping("/create")
-//    public String createProduct(@ModelAttribute Product product) {
-//        productService.createProduct(product);
-//        return "redirect:/${application-context-name}/private/v1/product";  // Chuyển hướng về danh sách sản phẩm
-//    }
-//
-//    @GetMapping("/update/{id}")
-//    public String showUpdateForm(@PathVariable Long id, Model model) {
-//        model.addAttribute("product", productService.getProductById(id));
-//        return "product/product-form";  // Trả về trang cập nhật (dùng chung với create)
-//    }
-//
-//    @PostMapping("/update")
-//    public String updateProduct(Long id, @ModelAttribute Product product) {
-//        productService.updateProduct(id, product);
-//        return "redirect:/${application-context-name}/private/v1/product";
-//    }
+    @PostMapping("marketer-product-add")
+    public String addProduct(@Valid @ModelAttribute("product") AddProductRequest product, BindingResult result, Model model) {
+        model.addAttribute("product", product);
+        model.addAttribute("categories", categoryService.getAllCustomerProductCategories());
+
+        // Nếu có lỗi validation thì quay lại form nhập liệu
+        if (result.hasErrors()) {
+            return "product/marketer/marketer-add-product";
+        }
+        try {
+            productService.saveProduct(product);
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", "An unexpected error occurred: " + e.getMessage());
+        }
+        return "product/marketer/marketer-add-product";
+    }
 
 }

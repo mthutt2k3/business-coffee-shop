@@ -36,15 +36,19 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Update Product</h3>
-                                <form class="form-sample" th:action="@{/products/update}" method="post" th:object="${product}">
-                                    <input type="hidden" th:field="*{id}" /> <!-- Truyền ID để update -->
+                                <form class="form-sample" th:action="@{/business-coffeeshop/product/marketer-product-add}" method="post" th:object="${product}"  enctype="multipart/form-data">
+<!--                                    <input type="hidden" th:field="*{id}" /> &lt;!&ndash; Truyền ID để update &ndash;&gt;-->
                                     <p class="card-description" th:text="${product.productName}"></p>
+                                    <div th:if="${errorMessage != null and !errorMessage.isEmpty()}" class="alert alert-danger">
+                                        <span th:text="${errorMessage}"></span>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label " style="padding-right: 10px">Product name</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" th:field="*{productName}" />
+                                                    <small class="text-danger" th:if="${#fields.hasErrors('productName')}" th:text="${#fields.errors('productName')}"></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,9 +56,10 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Category</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-select" th:field="*{category}">
+                                                    <select class="form-select" th:field="*{categoryId}">
                                                         <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
                                                     </select>
+                                                    <small class="text-danger" th:if="${#fields.hasErrors('categoryId')}" th:text="${#fields.errors('categoryId')}"></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -67,6 +72,8 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" placeholder="Gia goc"
                                                            th:field="*{originalPrice}" />
+                                                    <small class="text-danger" th:if="${#fields.hasErrors('originalPrice')}" th:text="${#fields.errors('originalPrice')}"></small>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -76,6 +83,8 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" placeholder="Gia ban chinh thuc"
                                                            th:field="*{sellingPrice}" />
+                                                    <small class="text-danger" th:if="${#fields.hasErrors('sellingPrice')}" th:text="${#fields.errors('sellingPrice')}"></small>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -83,32 +92,10 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-group row">
-                                                <label class="col-sm-3 col-form-label">Status</label>
-                                                <div class="col-sm-4">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            <input type="radio" class="form-check-input" name="status"
-                                                                   th:value="ACT" th:checked="${product.status == 'ACT'}"> Active
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-5">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            <input type="radio" class="form-check-input" name="status"
-                                                                   th:value="IACT" th:checked="${product.status == 'IACT'}"> Inactive
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleTextarea1">Description</label>
                                                 <textarea class="form-control" id="exampleTextarea1" rows="4" th:field="*{description}" ></textarea>
+                                                <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:text="${#fields.errors('description')}"></small>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -117,15 +104,16 @@
                                                 <div class="mb-3">
                                                     <div class="image-upload-box" id="uploadBox">
                                                         <p id="uploadText">Click or Paste Image Here</p>
-                                                        <input type="file" id="imageInput" accept="image/*" hidden>
+                                                        <input type="file" id="imageInput" th:field="*{imageFile}" accept="image/*" hidden>
+                                                        <small class="text-danger" th:if="${#fields.hasErrors('imageFile')}" th:text="${#fields.errors('imageFile')}"></small>
 
                                                         <!-- Hiển thị ảnh nếu có -->
-                                                        <img id="previewImage" class="image-preview"
-                                                             th:src="${product.imageUrl != null ? product.imageUrl : ''}"
-                                                             th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}" />
+                                                        <img id="previewImage" class="image-preview" />
+<!--                                                             th:src="${product.imageUrl != null ? product.imageUrl : ''}"-->
+<!--                                                             th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}" />-->
 
-                                                        <button type="button" id="removeImageBtn" class="remove-btn"
-                                                                th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}">
+                                                        <button type="button" id="removeImageBtn" class="remove-btn">
+<!--                                                                th:style="${product.imageUrl != null ? 'display:block;' : 'display:none;'}">-->
                                                             <i class="fa fa-window-close"></i>
                                                         </button>
                                                     </div>
@@ -135,11 +123,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 d-flex gap-3 align-items-center justify-content-center">
-                                            <a href="submit-page.html">
-                                                <button type="button" class="btn btn-gradient-primary btn-icon-text">
-                                                    <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit
-                                                </button>
-                                            </a>
+                                            <button type="submit" class="btn btn-gradient-primary btn-icon-text">
+                                                <i class="mdi mdi-file-check btn-icon-prepend"></i> Submit
+                                            </button>
+
                                             <a href="back-page.html">
                                                 <button type="button" class="btn btn-gradient-dark btn-icon-text">
                                                     <i class="fa fa-arrow-circle-left"></i> Back
@@ -147,8 +134,6 @@
                                             </a>
                                         </div>
                                     </div>
-
-
                                 </form>
                             </div>
 

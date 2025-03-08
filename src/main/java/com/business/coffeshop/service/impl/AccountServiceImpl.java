@@ -1,12 +1,16 @@
 package com.business.coffeshop.service.impl;
 
+import com.business.coffeshop.constant.RoleCodeEnum;
+import com.business.coffeshop.dto.RegisterAccountDto;
 import com.business.coffeshop.entity.Account;
 import com.business.coffeshop.repository.AccountRepository;
 import com.business.coffeshop.service.AccountService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +19,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByMsisdn(String msisdn) {
@@ -39,4 +46,25 @@ public class AccountServiceImpl implements AccountService {
     public void save(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    @Transactional
+    public Account registerCustomerAccount(RegisterAccountDto registerAccount) {
+        // Kiểm tra xem số điện thoại đã tồn tại chưa
+        if (accountRepository.findByMsisdn(registerAccount.getMsisdn()).isPresent()) {
+            throw new IllegalArgumentException("Phone number already exists!");
+        }
+
+        // Tạo mới User
+        Account newAccount = Account.builder()
+                .accountName(registerAccount.getName())
+                .address(registerAccount.getAddress())
+                .msisdn(registerAccount.getMsisdn())
+                .password(passwordEncoder.encode(registerAccount.getPassword()))  // Mã hóa mật khẩu
+                .roleCode(RoleCodeEnum.CUST.name())  // Đặt role là CUSTOMER
+                .build();
+
+        return accountRepository.save(newAccount);
+    }
+
 }

@@ -65,3 +65,5 @@ application:
   system:
     testing:
       enable: true
+  file:
+    upload-dir: uploads/products
