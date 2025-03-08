@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Cart{
+public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;

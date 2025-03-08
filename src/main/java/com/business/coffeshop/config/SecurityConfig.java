@@ -46,7 +46,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/**",
+                                "/business-coffeeshop/account/**",
                                 "/login").permitAll() // Cho phép tất cả truy cập
                         .anyRequest().authenticated() // Các request khác phải đăng nhập
                 )

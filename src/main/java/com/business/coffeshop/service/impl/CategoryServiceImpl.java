@@ -25,8 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCustomerProductCategories() {
-        List<CategoryDto> categoryDtos = categoryRepository.findAllCustomerProductCategories();
-        return categoryDtos;
+        return categoryRepository.findAllCustomerProductCategories();
     }
 
     @Override
